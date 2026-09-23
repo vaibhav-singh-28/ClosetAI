@@ -12,8 +12,11 @@ const Hero = () => {
   const heroTextRef = useRef(null)
   const navRef = useRef(null)
   const taglineRef = useRef(null)
+  const taglineWindowRef = useRef(null)
   const descRef = useRef(null)
+  const descWindowRef = useRef(null)
   const scrollHintRef = useRef(null)
+  const collageRef = useRef(null)
 
   const piecesRef = useRef([])
   const overlayTextRef = useRef(null)
@@ -30,12 +33,12 @@ const Hero = () => {
             mask: 'chars'
         })
         const taglineSplit = new SplitText(taglineRef.current, {
-            type: 'words',
-            mask: 'words',
+            type: 'lines, words',
+            mask: 'lines, words',
         })
         const descSplit = new SplitText(descRef.current, {
-            type: 'words',
-            mask: 'words'
+            type: 'lines, words',
+            mask: 'lines, words'
         })
 
 
@@ -98,7 +101,7 @@ const Hero = () => {
             scrollTrigger: {
                 trigger: wrapperRef.current,
                 start: 'top top',
-                end: '+=6000',
+                end: '+=4500',
                 scrub: 1,
                 pin: true,
                 // markers: true, 
@@ -119,8 +122,8 @@ const Hero = () => {
             ease: 'none',
         }, 0)
         .to(scrollHintRef.current, { opacity:0, duration: 1 , ease: 'none'}, 0)
-        .to(taglineRef.current, {top: '14vh', duration:1, ease: 'none'}, 0)
-        .to(descRef.current, {top: '16vh', duration:1, ease: 'none'}, 0)
+        .to(taglineWindowRef.current, {top: '14vh', duration:1, ease: 'none'}, 0)
+        .to(descWindowRef.current, {top: '16vh', duration:1, ease: 'none'}, 0)
 
         //phase2 pieces starts emerging one by one
         imagePieces.forEach((piece, i) => {
@@ -148,6 +151,39 @@ const Hero = () => {
         .to(label1Ref.current, { opacity:1 , y: 0, duration: 0.8, ease: 'power2.out'}, 5.5)
         .to(label2Ref.current, { opacity:1 , y: 0, duration: 0.8, ease: 'power2.out'}, 5.7)
 
+        // phase 5 - hero text exits
+        .to(taglineSplit.lines, {
+          yPercent: -100,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.12,
+          ease: 'power4.in',
+        }, 6.5)
+        .to(descSplit.lines, {
+          yPercent: -100,
+          opacity: 0,
+          duration: 1,
+          stagger: 0.08,
+          ease: 'power4.in',
+        }, 6.5)
+        .to(collageRef.current, {
+          yPercent: -25,
+          scale: 1.3,
+          opacity: 0,
+          duration: 1.5,
+          ease: 'power3.in',
+        }, 6.5)
+        .to(
+        [heroTextRef.current, navRef.current],
+        {
+            yPercent: -120,
+            opacity: 0,
+            duration: 0.9,
+            ease: 'power4.in',
+        },
+        6.5
+        )
+
     }, wrapperRef)
 
 
@@ -157,7 +193,11 @@ const Hero = () => {
 
 
   return (
-    <section ref={wrapperRef} className="relative h-screen overflow-hidden bg-[#0f0f0f] text-[#e4e4e4] px-20 py-16">
+    <section
+      ref={wrapperRef}
+      className="relative h-screen"
+    >
+        <div className="relative h-screen overflow-hidden bg-[#0f0f0f] text-[#e4e4e4] px-20 py-16">
 
         <nav
           ref={navRef}
@@ -185,26 +225,38 @@ const Hero = () => {
           [SCROLL DOWN]
         </p>
 
-        <h2
-          ref={taglineRef}
-          className="absolute top-[68vh] left-20 text-[3.5vw] font-tagline font-normal max-w-[55%]"
+        <div
+        ref={taglineWindowRef}
+        className="absolute top-[68vh] left-20 max-w-[55%] overflow-hidden"
         >
+          <h2
+            ref={taglineRef}
+            className="text-[3.5vw] font-tagline font-normal"
+          >
             Discover your style <br />
             Create what comes next.
-        </h2>
+          </h2>
+        </div>
+        
 
-        <p
-          ref={descRef}
-          className="absolute top-[70vh] right-20 max-w-75 text-sm font-mono opacity-70 text-right"
+        <div
+          ref={descWindowRef}
+          className="absolute top-[70vh] right-20 max-w-75 overflow-hidden"
         >
-          ClosetAI builds personal style <br />
-          around the clothes you own, <br />
-          helping you discover what to wear <br />
-          and make your wardrobe feel new.
-        </p>
+          <p
+            ref={descRef}
+            className="text-sm font-mono opacity-70 text-right"
+          >
+            ClosetAI builds personal style <br />
+            around the clothes you own, <br />
+            helping you discover what to wear <br />
+            and make your wardrobe feel new.
+          </p>
+        </div>
 
         {/* image collage container  */}
         <div
+        ref={collageRef}
         className='absolute left-1/2 -translate-x-1/2'
         style={{ top: '38vh', width: '60vw', height: '30vw'}}
         >
@@ -233,6 +285,7 @@ const Hero = () => {
             >AI Styling, Outfit Match,<br />Digital Wardrobe, Discover
             </div>
         </div>
+    </div>
     </section>
   )
 }
