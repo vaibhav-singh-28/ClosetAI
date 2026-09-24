@@ -81,113 +81,243 @@ const Section2 = () => {
   return () => clearInterval(interval);
 }, []);
 
-  useEffect(()=> {
-    let ctx = gsap.context(()=> {
-      const headingSplit = new SplitText(headingRef.current, {
-        type: "words",
-        mask: "words"
-       });
+  useEffect(() => {
+  const ctx = gsap.context(() => {
 
-      const labelSplit = new SplitText(labelTextRef.current, {
-        type: "words",
-        mask: "words"
-       });
+    // ---------------------------------------------
+    // TEXT SPLITS
+    // ---------------------------------------------
 
-       const paragraphSplit = new SplitText(paragraphRef.current, {
-        type: "words",
-        mask: "words",
-       });
+    const headingSplit = new SplitText(headingRef.current, {
+      type: "lines, words",
+      mask: "lines, words",
+    });
 
-    // gsap set 
-      gsap.set(headingSplit.words, {
-        opacity: 0,
-        yPercent: 100,
-       });
+    const labelSplit = new SplitText(labelTextRef.current, {
+      type: "lines, words",
+      mask: "lines, words",
+    });
 
-      gsap.set(labelSplit.words, {
-        opacity: 0,
-        yPercent: 100,
-       });
+    const paragraphSplit = new SplitText(paragraphRef.current, {
+      type: "lines, words",
+      mask: "lines, words",
+    });
 
-      gsap.set(wardrobeRef.current, {
-        clipPath: "inset(100% 100% 0% 0%)",
-        scale: 0.95,
-        transformOrigin: "bottom left",
-       });
 
-       gsap.set(outfitRef.current, {
-        clipPath: "inset(100% 100% 0% 0%)",
-        scale: 0.95,
-        transformOrigin: "bottom left",
-       });
+    // ---------------------------------------------
+    // INITIAL STATES
+    // ---------------------------------------------
 
-       gsap.set(paragraphSplit.words, {
-        opacity: 0,
-        yPercent: 100,
-       });
+    gsap.set(headingSplit.words, {
+      opacity: 0,
+      yPercent: 100,
+    });
 
-       gsap.set(buttonRef.current, {
-        clipPath: "inset(100% 100% 0% 0%)",
-        scale: 0.95,
-        transformOrigin: "bottom left",
-        });
+    gsap.set(labelSplit.words, {
+      opacity: 0,
+      yPercent: 100,
+    });
 
-       const scrollTl = gsap.timeline({
-        scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 70%",
-            end: "top -20%",
-            scrub: 1,
-        },
-       })
+    gsap.set(paragraphSplit.words, {
+      opacity: 0,
+      yPercent: 100,
+    });
 
-       scrollTl
-       .to(labelSplit.words, {
+    gsap.set(wardrobeRef.current, {
+      clipPath: "inset(100% 100% 0% 0%)",
+      scale: 0.95,
+      transformOrigin: "bottom left",
+    });
+
+    gsap.set(outfitRef.current, {
+      clipPath: "inset(100% 100% 0% 0%)",
+      scale: 0.95,
+      transformOrigin: "bottom left",
+    });
+
+    gsap.set(buttonRef.current, {
+      clipPath: "inset(100% 100% 0% 0%)",
+      scale: 0.95,
+      transformOrigin: "bottom left",
+    });
+
+
+    // ---------------------------------------------
+    // SECTION 2 ENTRANCE
+    // ---------------------------------------------
+
+    const entranceTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 70%",
+        end: "top -20%",
+        scrub: 1,
+      },
+    });
+
+    entranceTl
+      .to(
+        labelSplit.words,
+        {
           opacity: 1,
           yPercent: 0,
           duration: 1,
           stagger: 0.1,
           ease: "power4.out",
-        }, 0)
-       .to(headingSplit.words, {
-        opacity: 1,
-        yPercent: 0,
-        duration: 1,
-        stagger: 0.1,
-        ease: "power4.out",
-       }, 0)
-       
-       .to(wardrobeRef.current, {
-        clipPath: "inset(0% 0% 0% 0%)",
-        scale: 1,
-        duration: 6,
-        ease: "power2.out",
-       }, 0)
-       .to(outfitRef.current, {
-        clipPath: "inset(0% 0% 0% 0%)",
-        scale: 1,
-        duration: 6,
-        ease: "power2.out",
-       }, 1.5)
-       .to(paragraphSplit.words, {
-        opacity: 1,
-        yPercent: 0,
-        duration: 1.5,
-        stagger: 0.06,
-        ease: "power4.out",
-       }, 1.5)
-       .to(buttonRef.current, {
-        clipPath: "inset(0% 0% 0% 0%)",
-        scale: 1,
-        duration: 1.5,
-        ease: "power2.out",
-       }, 1.5)
-       
+        },
+        0
+      )
+      .to(
+        headingSplit.words,
+        {
+          opacity: 1,
+          yPercent: 0,
+          duration: 1,
+          stagger: 0.1,
+          ease: "power4.out",
+        },
+        0
+      )
+      .to(
+        wardrobeRef.current,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          scale: 1,
+          duration: 6,
+          ease: "power2.out",
+        },
+        0
+      )
+      .to(
+        outfitRef.current,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          scale: 1,
+          duration: 6,
+          ease: "power2.out",
+        },
+        1.5
+      )
+      .to(
+        paragraphSplit.words,
+        {
+          opacity: 1,
+          yPercent: 0,
+          duration: 1.5,
+          stagger: 0.06,
+          ease: "power4.out",
+        },
+        1.5
+      )
+      .to(
+        buttonRef.current,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          scale: 1,
+          duration: 1.5,
+          ease: "power2.out",
+        },
+        1.5
+      );
 
-    }, sectionRef);
-    
-    return () => ctx.revert();
-  }, []);
+
+  // ---------------------------------------------
+// SECTION 2 EXIT
+// ---------------------------------------------
+
+const exitTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: sectionRef.current,
+    start: "top 40%",
+    end: "top -60%",
+    scrub: 1,
+  },
+});
+
+exitTl
+
+  // Label exits through its clipping window
+  .to(
+    labelSplit.lines,
+    {
+      yPercent: -100,
+      opacity: 0,
+      duration: 0.7,
+      stagger: 0.08,
+      ease: "power4.in",
+    },
+    0
+  )
+
+  // Heading exits slightly faster
+  .to(
+    headingSplit.lines,
+    {
+      yPercent: -100,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.08,
+      ease: "power4.in",
+    },
+    0
+  )
+
+  // Description follows the heading
+  .to(
+    paragraphSplit.lines,
+    {
+      yPercent: -100,
+      opacity: 0,
+      duration: 0.9,
+      stagger: 0.08,
+      ease: "power4.in",
+    },
+    0.05
+  )
+
+  // Button leaves with the text, slightly later
+  .to(
+    buttonRef.current,
+    {
+      yPercent: -25,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power4.in",
+    },
+    0.15
+  )
+
+  // Wardrobe panel starts moving at the same moment
+  .to(
+    wardrobeRef.current,
+    {
+      yPercent: -10,
+      opacity: 0,
+      scale: 1.03,
+      duration: 1.4,
+      ease: "power2.inOut",
+    },
+    0
+  )
+
+  // AI Outfit panel follows the same motion
+  .to(
+    outfitRef.current,
+    {
+      yPercent: -10,
+      opacity: 0,
+      scale: 1.03,
+      duration: 1.4,
+      ease: "power2.inOut",
+    },
+    0
+  );
+
+  }, sectionRef);
+
+
+  return () => ctx.revert();
+}, []);
 
   return (
     <section 
