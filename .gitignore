@@ -1,0 +1,7 @@
+# Auth dependencies
+auth/client/node_modules/
+auth/server/node_modules/
+
+# Auth environment files
+auth/client/.env
+auth/server/.env
