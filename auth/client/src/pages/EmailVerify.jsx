@@ -55,7 +55,7 @@ const EmailVerify = () => {
       if (data.success) {
         toast.success(data.message)
         getUserData()
-        navigate('/Home')
+        window.location.href = 'http://localhost:5174'
       } else {
         toast.error(data.message)
       }
@@ -65,16 +65,18 @@ const EmailVerify = () => {
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300'>
-      <img
-        onClick={() => navigate('/Home')}
-        src={authlogo}
-        alt="authlogo"
-        className="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer"
-      />
-      <form onSubmit={onSubmitHandler} className='bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm'>
+    <div className='flex items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,#151817_0%,#2C322E_38%,#424942_68%,#596258_100%)]'>
+        <h1
+          onClick={() => navigate('/Home')}
+          className="absolute left-4 sm:left-20 top-8 text-white text-[2.4rem] font-medium tracking-tight cursor-pointer"
+        >
+          CLØSET AI
+        </h1>
+      <form onSubmit={onSubmitHandler} 
+        className='bg-[#202522]/70 backdrop-blur-sm border border-white/25 p-10 rounded-lg shadow-lg w-[28rem] h-[24rem] text-sm flex flex-col gap-2 justify-center'
+      >
         <h1 className='text-white text-2xl font-semibold text-center mb-4'>E-mail Verification OTP</h1>
-        <p className='text-center mb-6 text-blue-300'>Enter the 6-digit code sent to your email id</p>
+        <p className='text-center mb-6 text-white/60'>Enter the 6-digit code sent to your email id</p>
         <div className='flex justify-between mb-8' onPaste={handlePaste}>
           {Array(6).fill(0).map((_, index) => (
             <input
@@ -85,11 +87,11 @@ const EmailVerify = () => {
               ref={e => (inputRefs.current[index] = e)}
               onInput={(e) => handleInput(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className='w-12 h-12 bg-[#333A5C] text-white text-center text-xl rounded-md'
+              className='w-12 h-12 bg-transparent border border-white/25 text-white text-center text-xl rounded-md outline-none focus:border-white/50'
             />
           ))}
         </div>
-        <button className='w-full py-3 bg-gradient-to-r from-blue-300 to-blue-900 text-white rounded-full'>
+        <button className='w-full py-3 bg-[#F2F0EA] text-[#202522] rounded-full'>
           Verify email
         </button>
       </form>

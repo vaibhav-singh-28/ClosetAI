@@ -71,24 +71,33 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 to-blue-300'>
-      <img
+    <div className='flex items-center justify-center min-h-screen bg-[linear-gradient(to_top_right,#151817_0%,#2C322E_38%,#424942_68%,#596258_100%)]'>
+      <h1
         onClick={() => navigate('/Home')}
-        src={authlogo}
-        alt="authlogo"
-        className="absolute left-5 sm:left-20 top-5 w-28 sm:w-32 cursor-pointer"
-      />
+        className="absolute left-8 sm:left-20 top-8 text-white text-[2.4rem] tracking-tight font-medium cursor-pointer"
+      >
+        CLØSET AI
+      </h1>
       {/* enter email-id */}
 
       {!isEmailSent &&
-      <form onSubmit={onSubmitEmail} className='bg-slate-900 p-8 rounded-lg shadow-lg w-96 text-sm'>
+      <form
+        onSubmit={onSubmitEmail}
+        className='bg-[#202522]/70 backdrop-blur-sm border border-white/25 p-10 rounded-lg w-108 text-sm flex flex-col justify-center'
+      >
        <h1 className='text-white text-2xl font-semibold text-center mb-4'>Reset Password</h1>
-       <p className='text-center mb-6 text-blue-300'>Enter your registered e-mail id</p>
-       <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-blue-200'>
-       <input type="email" placeholder='Email id' className='bg-transparent outline-none text-gray'
-       value={email} onChange={e=>setEmail(e.target.value)} required/>
-       </div>
-       <button className='w-full py-2.5 bg-gradient-to-r from-blue-500 to-blue-900 text-white
+       <p className='text-center mb-6 text-white/60'>Enter your registered e-mail id</p>
+       <div className='mb-4 flex items-center gap-3 w-full px-5 py-2.5 rounded-full bg-transparent border border-white/25'>
+          <input
+            type="email"
+            placeholder='Email id'
+            className='bg-transparent outline-none text-white placeholder:text-white/50 w-full'
+            value={email}
+            onChange={e=>setEmail(e.target.value)}
+            required
+          />
+        </div>
+       <button className='w-full py-2.5 bg-[#f5f3ec] text-black
         rounded-full mt-3'>Submit</button>
       </form>}
 
@@ -125,7 +134,7 @@ const ResetPassword = () => {
        <input type="password" placeholder='Password' className='bg-transparent outline-none text-gray'
        value={newPassword} onChange={e=>setNewPassword(e.target.value)} required/>
        </div>
-       <button className='w-full py-2.5 bg-gradient-to-r from-blue-500 to-blue-900 text-white
+       <button className='w-full py-2.5 bg-[#f5f3ec] text-black
         rounded-full mt-3'>Submit</button>
       </form>}
 

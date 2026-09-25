@@ -207,7 +207,10 @@ const Hero = () => {
             <span>[SCAN]</span>
             <span>[DISCOVER]</span>
             <span>[WARDROBE]</span>
-            <span>[PROFILE]</span>
+            <span
+            onClick={() => window.location.href = 'http://localhost:5173/Login'}
+            className="cursor-pointer"
+            >[PROFILE]</span>
           </div>
         </nav>
 
