@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import ImageCollage, { imagePieces } from './ImageCollage'
 import heroImage from '../assets/heroImage.jpg'
+import { Link } from "react-router-dom"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -204,14 +205,11 @@ const Hero = () => {
           className="absolute top-10 left-20 right-20 flex justify-end opacity-0"
         >
           <div className="flex gap-10 text-sm tracking-widest">
-            <span>[SCAN]</span>
-            <span>[DISCOVER]</span>
-            <span>[WARDROBE]</span>
-            <span
-            onClick={() => window.location.href = 'http://localhost:5173/Login'}
-            className="cursor-pointer"
-            >[PROFILE]</span>
-          </div>
+            <Link to="/scan">[SCAN]</Link>
+            <span className='opacity-50'>[DISCOVER]</span>
+            <Link to="/wardrobe">[WARDROBE]</Link>
+            <span className="opacity-50 cursor-pointer">[PROFILE]</span>
+            </div>
         </nav>
 
         <h1

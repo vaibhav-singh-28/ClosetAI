@@ -1,14 +1,17 @@
-import Hero from './components/Hero'
-import Section2 from './components/Section2'
-import Section3 from './components/Section3'
+import HomePage from "./pages/HomePage"
+import ScanPage from "./pages/ScanPage"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 const App = () => {
   return (
-    <div className="App">
-      <Hero />
-      <Section2 />
-      <Section3 />
-    </div>
+    <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/scan" element={<ScanPage />} />
+          <Route path="/wardrobe" element={<div className="p-10 text-2xl">Wardrobe-coming soon</div>} />
+        </Routes>
+    </BrowserRouter>
+    
   )
 }
 
