@@ -1,32 +1,53 @@
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import StatsBar from "../components/wardrobe/StatsBar"
 import FilterBar from "../components/wardrobe/FilterBar"
 import ItemGrid from "../components/wardrobe/ItemGrid"
 
-// ===== STATIC FAKE DATA (design match ke liye) =====
-// Kal isko GET /items se replace karenge
-const TIP_IMGS = ["/tips/tip1.jpg", "/tips/tip2.jpeg", "/tips/tip3.jpeg"]
-const FAKE_ITEMS = [
-  { _id: "1", subcategory: "Basic T-Shirt", category: "top",      colors: ["white"], style: "casual" },
-  { _id: "2", subcategory: "Hoodie",        category: "top",      colors: ["black"], style: "casual" },
-  { _id: "3", subcategory: "Overshirt",     category: "outerwear",colors: ["olive"], style: "casual" },
-  { _id: "4", subcategory: "Knit Sweater",  category: "top",      colors: ["beige"], style: "winter" },
-  { _id: "5", subcategory: "Camp Shirt",    category: "top",      colors: ["black"], style: "casual" },
-  { _id: "6", subcategory: "Denim Jeans",   category: "bottom",   colors: ["blue"],  style: "casual" },
-  { _id: "7", subcategory: "Cargo Pants",   category: "bottom",   colors: ["beige"], style: "utility" },
-  { _id: "8", subcategory: "Trousers",      category: "bottom",   colors: ["black"], style: "formal" },
-  { _id: "9", subcategory: "Bomber Jacket", category: "outerwear",colors: ["cream"], style: "casual" },
-  { _id: "10", subcategory: "Denim Jacket", category: "outerwear",colors: ["blue"],  style: "casual" },
-  { _id: "11", subcategory: "Sneakers",     category: "shoes",    colors: ["white"], style: "casual" },
-  { _id: "12", subcategory: "Cap",          category: "accessory",colors: ["black"], style: "casual" },
-].map((item, i) => ({ ...item, imageUrl: TIP_IMGS[i % 3] }))  // 3 images ko rotate kar rahe
+const API = "http://localhost:3000"
+
+// Pill label → item.category (jo DB mein hai)
+const CAT_MAP = {
+  ALL: null, TOPS: "top", BOTTOMS: "bottom", OUTERWEAR: "outerwear",
+  DRESSES: "dress", SHOES: "shoes", ACCESSORIES: "accessory",
+}
 
 function WardrobePage() {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [cat, setCat] = useState("ALL")
+  const [query, setQuery] = useState("")
+  const [sort, setSort] = useState("newest")
+
+  // ===== REAL DATA: page khulte hi /items se lao =====
+  useEffect(() => {
+    fetch(`${API}/items`)
+      .then(r => r.json())
+      .then(data => { setItems(data); setLoading(false) })
+      .catch(() => { setError("Backend se data nahi mila — server chal raha hai? (node server.js)"); setLoading(false) })
+  }, [])
+
+  // ===== FILTER + SEARCH + SORT (sab client-side, ek pipeline) =====
+  const filtered = items
+    .filter(it => !CAT_MAP[cat] || it.category === CAT_MAP[cat])
+    .filter(it => {
+      const q = query.trim().toLowerCase()
+      if (!q) return true
+      return it.subcategory.toLowerCase().includes(q) ||
+             it.colors.some(c => c.toLowerCase().includes(q))
+    })
+    .sort((a, b) => {
+      if (sort === "newest") return b._id.localeCompare(a._id)  // ObjectId: naya = bada
+      if (sort === "oldest") return a._id.localeCompare(b._id)
+      return a.subcategory.localeCompare(b.subcategory)
+    })
+
   return (
     <div className="min-h-screen bg-[#1D251A] text-[#F0EAD9]">
-      {/* ===== NAVBAR (bracket style — design ke hisaab se) ===== */}
+      {/* Navbar — waise hi jaise static version mein tha */}
       <nav className="flex items-center justify-between px-10 py-6">
-        <Link to="/" className="font-display text-xl tracking-widest">CLOSET AI</Link>
+        <Link to="/" className="font-tagline text-4xl tracking-wide">CLØSET AI</Link>
         <div className="flex gap-10 text-sm tracking-widest">
           <Link to="/scan" className="text-[#F0EAD9]/50 hover:text-[#F0EAD9] transition">[ SCAN ]</Link>
           <span className="text-[#F0EAD9]/30">[ DISCOVER ]</span>
@@ -35,8 +56,8 @@ function WardrobePage() {
         </div>
       </nav>
 
-      <main className="max-w-[1400px] mx-auto px-10 pb-16">
-        {/* ===== HEADER ===== */}
+      <main className="max-w-350 mx-auto px-10 pb-16">
+        {/* Header — waise hi */}
         <div className="flex items-end justify-between mt-8">
           <div className="flex items-start gap-10">
             <div>
@@ -47,24 +68,29 @@ function WardrobePage() {
               </div>
               <h1 className="font-display text-6xl mt-5">Your collection.</h1>
             </div>
-            {/* Right side text + vertical divider */}
-            <div className="hidden md:block border-l border-[#F0EAD9]/20 pl-8 pb-2">
+            <div className="hidden md:block border-l border-[#F0EAD9]/20 pl-8 p-2 mt-4">
               <p className="font-display text-lg leading-snug">Your wardrobe, your style.</p>
               <p className="text-sm text-[#F0EAD9]/60 mt-1">Every piece you own, all in one place.</p>
             </div>
           </div>
         </div>
 
-        {/* ===== STATS ===== */}
-        <StatsBar items={FAKE_ITEMS} />
+        {/* Stats — HAMESHA poore wardrobe ke (filter se change nahi hote) */}
+        <StatsBar items={items} />
 
         <div className="h-px bg-[#F0EAD9]/15 my-8" />
 
-        {/* ===== FILTERS + SEARCH + SORT ===== */}
-        <FilterBar />
+        {/* Filters — ab controlled (state neeche se upar aayi) */}
+        <FilterBar cat={cat} setCat={setCat} query={query} setQuery={setQuery} sort={sort} setSort={setSort} />
 
-        {/* ===== GRID ===== */}
-        <ItemGrid items={FAKE_ITEMS} />
+        {/* Grid / Loading / Error */}
+        {loading ? (
+          <p className="text-center mt-24 text-[#F0EAD9]/50 tracking-widest">LOADING YOUR WARDROBE...</p>
+        ) : error ? (
+          <p className="text-center mt-24 text-red-300">{error}</p>
+        ) : (
+          <ItemGrid items={filtered} hasFilters={cat !== "ALL" || query.trim() !== ""} />
+        )}
       </main>
     </div>
   )

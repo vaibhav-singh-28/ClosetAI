@@ -13,12 +13,12 @@ function ScanPage() {
 
       {/* ===== NAVBAR ===== */}
       <nav className="flex items-center justify-between px-10 py-6">
-        <span className="font-display text-xl tracking-widest">CLOSET AI</span>
-        <div className="flex gap-8 text-xs tracking-[0.2em] uppercase">
-          <span className="text-[#f3ede3] border-b border-[#e8e0d0] pb-1">Scan</span>
-          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">Discover</span>
-          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">Wardrobe</span>
-          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">Profile</span>
+        <span className="font-tagline text-4xl tracking-wide">CLØSET AI</span>
+        <div className="flex gap-10 text-xs tracking-[0.2em] uppercase">
+          <span className="text-[#f3ede3] border-b border-[#e8e0d0] pb-1">[ Scan ]</span>
+          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Discover ]</span>
+          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Wardrobe ]</span>
+          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Profile ]</span>
         </div>
       </nav>
 
@@ -31,7 +31,7 @@ function ScanPage() {
             <span className="h-px w-16 bg-[#e8e0d0]/40" />
             <span>SCAN</span>
           </div>
-          <h1 className="font-display text-5xl md:text-6xl mt-6 leading-tight">
+          <h1 className="font-tagline text-5xl md:text-6xl mt-6 leading-tight">
             Add to your wardrobe.
           </h1>
           <p className="text-[#f3ede3]/70 mt-6 max-w-sm font-light leading-relaxed">

@@ -56,7 +56,7 @@ function UploadZone() {
   }
 
   return (
-    <div className="border-2 border-dashed border-[#e8e0d0]/40 rounded-3xl py-16 h-[460px] flex flex-col items-center justify-center text-center backdrop-blur-sm bg-black/10 relative">
+    <div className="border-2 border-dashed border-[#e8e0d0]/40 rounded-3xl py-16 h-115 flex flex-col items-center justify-center text-center backdrop-blur-sm bg-black/10 relative">
 
       {/* Hidden file input — poora zone click karne pe khule */}
       <input

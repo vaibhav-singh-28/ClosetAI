@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { ScanLine } from "lucide-react"
+import { ScanLine, SearchX } from "lucide-react"
 
 function ItemCard({ item }) {
   return (
@@ -34,8 +34,25 @@ function EmptyWardrobe() {
   )
 }
 
-function ItemGrid({ items }) {
-  if (items.length === 0) return <EmptyWardrobe />
+// ⭐ NAYA: filter/search pe kuch match nahi hua
+function NoMatch({ onClear }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center">
+      <SearchX size={36} className="text-[#F0EAD9]/30 mb-4" />
+      <p className="font-display text-2xl text-[#F0EAD9]/60">No items match your filters.</p>
+      <button onClick={onClear}
+        className="mt-5 text-xs tracking-[0.2em] border border-[#F0EAD9]/30 px-5 py-2 rounded-lg text-[#F0EAD9]/70 hover:text-[#F0EAD9] hover:border-[#F0EAD9]/60 transition">
+        [ CLEAR FILTERS ]
+      </button>
+    </div>
+  )
+}
+
+function ItemGrid({ items, hasFilters }) {
+  if (items.length === 0) {
+    // Wardrobe khaali hai YA filters ne sab chhupa diya?
+    return hasFilters ? <NoMatch /> : <EmptyWardrobe />
+  }
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-6 gap-y-10 mt-10">
