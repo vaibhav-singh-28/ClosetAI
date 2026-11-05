@@ -66,7 +66,7 @@ function WardrobePage() {
                 <span className="h-px w-16 bg-[#F0EAD9]/30" />
                 <span>WARDROBE</span>
               </div>
-              <h1 className="font-display text-6xl mt-5">Your collection.</h1>
+              <h1 className="font-inter text-6xl mt-5">Your collection.</h1>
             </div>
             <div className="hidden md:block border-l border-[#F0EAD9]/20 pl-8 p-2 mt-4">
               <p className="font-display text-lg leading-snug">Your wardrobe, your style.</p>
