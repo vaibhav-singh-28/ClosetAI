@@ -1,10 +1,16 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import gsap from 'gsap' 
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
 import ImageCollage, { imagePieces } from './ImageCollage'
 import heroImage from '../assets/heroImage.jpg'
 import { Link } from "react-router-dom"
+
+
+const killAnimations = () => {
+  ScrollTrigger.getAll().forEach(t => t.kill(true))
+  window.scrollTo(0, 0)
+}
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -25,7 +31,7 @@ const Hero = () => {
   const label2Ref = useRef(null)
 
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let ctx = gsap.context(() => {
 
         //text ko split kiya aur mask diya
@@ -188,7 +194,11 @@ const Hero = () => {
     }, wrapperRef)
 
 
-    return () => ctx.revert() 
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill())
+      ctx.revert()
+      window.scrollTo(0,0)
+    }
   }, [])
 
 
@@ -200,16 +210,13 @@ const Hero = () => {
     >
         <div className="relative h-screen overflow-hidden bg-[#0f0f0f] text-[#e4e4e4] px-20 py-16">
 
-        <nav
-          ref={navRef}
-          className="absolute top-10 left-20 right-20 flex justify-end opacity-0"
-        >
+        <nav ref={navRef} className="absolute top-10 left-20 right-20 flex justify-end opacity-0">
           <div className="flex gap-10 text-sm tracking-widest">
-            <Link to="/scan">[SCAN]</Link>
+            <Link to="/scan" onClick={killAnimations}>[SCAN]</Link>
             <span className='opacity-50'>[DISCOVER]</span>
-            <Link to="/wardrobe">[WARDROBE]</Link>
+            <Link to="/wardrobe" onClick={killAnimations}>[WARDROBE]</Link>
             <span className="opacity-50 cursor-pointer">[PROFILE]</span>
-            </div>
+          </div>
         </nav>
 
         <h1
