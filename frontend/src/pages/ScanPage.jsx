@@ -1,5 +1,6 @@
 import UploadZone from "../components/scan/UploadZone"
 import TipsSection from "../components/scan/TipsSection"
+import { Link } from "react-router-dom"
 // ❌ ResultCard import hata do — ab use nahi ho raha
 
 function ScanPage() {
@@ -13,11 +14,11 @@ function ScanPage() {
 
       {/* ===== NAVBAR ===== */}
       <nav className="flex items-center justify-between px-10 py-6">
-        <span className="font-tagline text-4xl tracking-wide">CLØSET AI</span>
+        <Link to="/" className="font-tagline text-4xl tracking-wide">CLØSET AI</Link>
         <div className="flex gap-10 text-xs tracking-[0.2em] uppercase">
-          <span className="text-[#f3ede3] border-b border-[#e8e0d0] pb-1">[ Scan ]</span>
+          <Link to="/scan" className="text-[#F0EAD9] border-b border-[#F0EAD9] pb-1">[ Scan ]</Link>
           <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Discover ]</span>
-          <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Wardrobe ]</span>
+          <Link to="/wardrobe" className="text-[#F0EAD9]/50 hover:text-[#F0EAD9] transition">[ WARDROBE ]</Link>
           <span className="text-[#f3ede3]/50 hover:text-[#f3ede3] transition cursor-pointer">[ Profile ]</span>
         </div>
       </nav>

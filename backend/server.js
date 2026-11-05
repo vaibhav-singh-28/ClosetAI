@@ -7,15 +7,24 @@ import { GoogleGenAI } from "@google/genai"
 import mongoose from "mongoose"
 import Groq from "groq-sdk"
 
+import cookieParser from "cookie-parser"
+import authRouter from "./routes/authRoutes.js"
+import userRouter from "./routes/userRoutes.js"
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB connected"))
 .catch((e) => console.log("MongoDB error:", e.message))
 
 const app = express()
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173", credentials: true
 }))
 app.use("/uploads", express.static("uploads"))
+app.use(express.json())       // auth routes JSON body padhenge
+app.use(cookieParser())       // JWT cookie read karne ke liye
+
+app.use("/api/auth", authRouter)
+app.use("/api/user", userRouter)
 
 //For deleting an item
 app.delete("/api/items/:id", async (req, res) => {
