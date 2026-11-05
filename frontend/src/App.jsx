@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { AppContextProvider } from "./context/AppContext"
 import ProtectedRoute from "./components/ProtectedRoute"
+import WelcomePage from "./pages/WelcomePage"
 
 import Hero from "./components/Hero"
 import Section2 from "./components/Section2"
@@ -22,6 +23,7 @@ function App() {
         <ToastContainer />
         <Routes>
           {/* Public routes — login bina yeh sab accessible */}
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/EmailVerify" element={<EmailVerify />} />
           <Route path="/ResetPassword" element={<ResetPassword />} />

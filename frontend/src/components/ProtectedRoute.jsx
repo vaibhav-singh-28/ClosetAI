@@ -13,7 +13,7 @@ function ProtectedRoute() {
     )
   }
 
-  return isLoggedin ? <Outlet /> : <Navigate to="/login" replace />
+  return isLoggedin ? <Outlet /> : <Navigate to="/welcome" replace />
 }
 
 export default ProtectedRoute
